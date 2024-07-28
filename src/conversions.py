@@ -90,6 +90,26 @@ def heating_mode_to_string(heating_mode):
         return "eco"
     elif heating_mode == 10:
         return "high"
+    elif heating_mode == 17:
+        return "fan 1"
+    elif heating_mode == 18:
+        return "fan 2"
+    elif heating_mode == 19:
+        return "fan 3"
+    elif heating_mode == 20:
+        return "fan 4"
+    elif heating_mode == 21:
+        return "fan 5"
+    elif heating_mode == 22:
+        return "fan 6"
+    elif heating_mode == 23:
+        return "fan 7"
+    elif heating_mode == 24:
+        return "fan 8"
+    elif heating_mode == 25:
+        return "fan 9"
+    elif heating_mode == 26:
+        return "fan 10"
     else:
         return f"UNKNOWN ({heating_mode})"
     
@@ -101,6 +121,26 @@ def string_to_heating_mode(string):
         return 1
     elif string == "high":
         return 10
+    elif string == "fan 1":
+        return 17
+    elif string == "fan 2":
+        return 18
+    elif string == "fan 3":
+        return 19
+    elif string == "fan 4":
+        return 20
+    elif string == "fan 5":
+        return 21
+    elif string == "fan 6":
+        return 22
+    elif string == "fan 7":
+        return 23
+    elif string == "fan 8":
+        return 24
+    elif string == "fan 9":
+        return 25
+    elif string == "fan 10":
+        return 26
     else:
         raise ValueError(f"Invalid heating mode: {string}")
 
