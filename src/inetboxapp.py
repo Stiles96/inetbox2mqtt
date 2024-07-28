@@ -279,7 +279,10 @@ class InetboxApp:
               'el_power_level': [0, False, False], 'energy_mix': [1, False, False], 'current_temp_water': [0, True, False],
               'current_temp_room': [0, True, False], 'operating_status': [0, True, False], 'error_code': [0, False, False],
               'aircon_operating_mode': [0, True, False], 'aircon_vent_mode': [114, True, False],
-              'target_temp_aircon': [2990, True, False], 'aircon_on': [1, False, False]}
+              'target_temp_aircon': [2990, True, False], 'aircon_on': [1, False, False], 'timer_active': [0, False, False], 
+              'timer_start_minutes': [0, False, False], 'timer_start_hours': [0, False, False], 'timer_stop_minutes': [0, False, False], 
+              'timer_stop_hours': [0, False, False], 'timer_target_temp_room': [0, False, False], 'timer_target_temp_water': [0, False, False],
+              'display': [0, False, False]}
 
     status_updated = False
 
