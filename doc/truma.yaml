@@ -55,7 +55,7 @@ template:
           eco
           {% elif temp == 60 %}
           hot
-          {% else %}
+          {% elif temp == 200 %}
           boost
           {% endif %}
 

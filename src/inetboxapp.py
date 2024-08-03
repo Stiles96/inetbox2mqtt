@@ -111,21 +111,21 @@ class InetboxApp:
                     2: ["checksum", 1, False],
                     3: ["target_temp_room", 2, True],
                     4: ["heating_mode", 1, True],
-                    5: ["recv_status_u3", 1, False],
+                    5: ["recv_status_u3", 1, True],
                     6: ["el_power_level", 2, True],
                     7: ["target_temp_water", 2, True],
                     8: ["el_power_level", 2, False],  # appears twice, we assume that it is the same
                     9: ["energy_mix", 1,True],
-                   10: ["energy_mix", 1, False], # appears twice, we assume that it is the same
+                   10: ["energy_mix2", 1, True], # appears twice, we assume that it is the same
                    11: ["current_temp_water", 2, True],
                    12: ["current_temp_room", 2, True],
                    13: ["operating_status", 1, True],
                    14: ["error_code", 2, True],
-                   15: ["recv_status_u10", 1, False],
-                   16: ["recv_status_u11", 1, False],
-                   17: ["recv_status_u12", 1, False],
-                   18: ["recv_status_u13", 1, False],
-                   19: ["recv_status_u14", 1, False],
+                   15: ["recv_status_u10", 1, True],
+                   16: ["recv_status_u11", 1, True],
+                   17: ["recv_status_u12", 1, True],
+                   18: ["recv_status_u13", 1, True],
+                   19: ["recv_status_u14", 1, True],
         },
         STATUS_BUFFER_HEADER_WRITE_STATUS: {
             # mapping-table: key, mapping-key, byte-len
@@ -248,6 +248,10 @@ class InetboxApp:
             cnv.energy_mix_code_to_string,
             cnv.string_to_energy_mix_code,
         ),
+         "energy_mix2": (
+            cnv.energy_mix_code_to_string,
+            cnv.string_to_energy_mix_code,
+        ),
         "current_temp_room": (cnv.temp_code_to_string, None),
         "current_temp_water": (cnv.temp_code_to_string, None),
         "operating_status": (cnv.operating_status_to_string, None),
@@ -270,7 +274,13 @@ class InetboxApp:
         "timer_stop_hours": (int, int,),
         "clock": (cnv.clock_to_string, None,),
         "display": (str, None),
-        "aircon_on": (int, int)
+        "aircon_on": (int, int),
+        "recv_status_u3": (int, int),
+        "recv_status_u10": (int, int),
+        "recv_status_u11": (int, int),
+        "recv_status_u12": (int, int),
+        "recv_status_u13": (int, int),
+        "recv_status_u14": (int, int)
     }
 
     # array with value, mqtt-send, cpplus-send flags
@@ -278,11 +288,11 @@ class InetboxApp:
               'checksum': [0, False, False], 'target_temp_room': [0, True, False], 'heating_mode': [0, True, False],
               'el_power_level': [0, False, False], 'energy_mix': [1, False, False], 'current_temp_water': [0, True, False],
               'current_temp_room': [0, True, False], 'operating_status': [0, True, False], 'error_code': [0, False, False],
-              'aircon_operating_mode': [0, True, False], 'aircon_vent_mode': [114, True, False],
-              'target_temp_aircon': [2990, True, False], 'aircon_on': [1, False, False], 'timer_active': [0, False, False], 
-              'timer_start_minutes': [0, False, False], 'timer_start_hours': [0, False, False], 'timer_stop_minutes': [0, False, False], 
-              'timer_stop_hours': [0, False, False], 'timer_target_temp_room': [0, False, False], 'timer_target_temp_water': [0, False, False],
-              'display': [0, False, False]}
+              'aircon_operating_mode': [0, True, False], 'aircon_vent_mode': [119, True, False],
+              'target_temp_aircon': [2990, True, False], 'aircon_on': [1, False, False], 'timer_active': [0, True, False], 
+              'timer_start_minutes': [0, True, False], 'timer_start_hours': [0, True, False], 'timer_stop_minutes': [0, True, False], 
+              'timer_stop_hours': [0, True, False], 'timer_target_temp_room': [0, True, False], 'timer_target_temp_water': [0, True, False],
+              'display': [0, True, False]}
 
     status_updated = False
 

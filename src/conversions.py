@@ -34,6 +34,10 @@ def operating_status_to_string(operating_status):
         return "Off"
     elif operating_status == 1:
         return "WARNING"
+    elif operating_status == 2:
+        return "Unknown (2)"
+    elif operating_status == 3:
+        return "Unknown (3)"
     elif operating_status == 4:
         return "start/cool down"
     elif operating_status == 5:
