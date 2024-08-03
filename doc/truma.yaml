@@ -456,7 +456,7 @@ automation:
                   40
                   {% elif states('input_boolean.truma_water_hot')=='on' %}
                   60
-                  {% else %}
+                  {% elif states('input_boolean.truma_water_boost')=='on' %}
                   200
                   {% endif %}
       - choose:

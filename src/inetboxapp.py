@@ -161,11 +161,11 @@ class InetboxApp:
                    1: ["dummy", 1, False],
                    2: ["checksum", 1, False],
                    3: ["timer_target_temp_room", 2, True],
-                   4: ["timer_unknown2", 1, False],
-                   5: ["timer_unknown3", 1, False],
-                   6: ["timer_unknown4", 1, False],
-                   7: ["timer_unknown5", 1, False],
-                   8: ["timer_target_temp_water", 2, True],
+                   4: ["timer_unknown2", 1, False], # 01
+                   5: ["timer_unknown3", 1, False], # 00
+                   6: ["timer_unknown4", 1, False], # 00
+                   7: ["timer_unknown5", 1, False], # 00
+                   8: ["timer_target_temp_water", 2, True], # 00 00 => off, 3a 0c => eco, 02 0d => hot, 7a 12 => boost
                    9: ["timer_unknown6", 1, False],
                   10: ["timer_unknown7", 1, False],
                   11: ["timer_unknown8", 1, False],
