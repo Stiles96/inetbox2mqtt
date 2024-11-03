@@ -649,3 +649,327 @@ automation:
         data:
           topic: "service/truma/set/el_power_level"
           payload: "0"
+  - id: 'c44'
+    alias: Truma Timer 2 - 3 Uhr an
+    description: ''
+    trigger:
+    - platform: time
+      at: 02:00:00
+    condition:
+    - condition: state
+      entity_id: input_boolean.truma_timer_2_3_uhr
+      state: 'on'
+    action:
+    - choose:
+      - conditions:
+          condition: state
+          entity_id: input_boolean.truma_ctrl
+          state: 'on'
+        sequence:
+        - entity_id: climate.truma
+          action: climate.turn_on
+        - data:
+            topic: service/truma/set/target_temp_room
+            payload: '{{ (state_attr(''climate.truma'', ''temperature''))|round() }}
+
+              '
+          action: mqtt.publish
+        - data:
+            topic: service/truma/set/heating_mode
+            payload: high
+          action: mqtt.publish
+    - choose:
+      - conditions:
+          condition: state
+          entity_id: input_boolean.truma_ctrl
+          state: 'off'
+        sequence:
+        - entity_id: climate.truma
+          data:
+            hvac_mode: 'off'
+          action: climate.set_hvac_mode
+    mode: single
+  - id: 'c45'
+    alias: Truma Timer 6 - 7 Uhr an
+    description: ''
+    trigger:
+    - platform: time
+      at: 06:00:00
+    condition:
+    - condition: state
+      entity_id: input_boolean.truma_timer_6_7_uhr
+      state: 'on'
+    action:
+    - choose:
+      - conditions:
+          condition: state
+          entity_id: input_boolean.truma_ctrl
+          state: 'on'
+        sequence:
+        - entity_id: climate.truma
+          action: climate.turn_on
+        - data:
+            topic: service/truma/set/target_temp_room
+            payload: '{{ (state_attr(''climate.truma'', ''temperature''))|round() }}
+
+              '
+          action: mqtt.publish
+        - data:
+            topic: service/truma/set/heating_mode
+            payload: high
+          action: mqtt.publish
+    - choose:
+      - conditions:
+          condition: state
+          entity_id: input_boolean.truma_ctrl
+          state: 'off'
+        sequence:
+        - entity_id: climate.truma
+          data:
+            hvac_mode: 'off'
+          action: climate.set_hvac_mode
+    mode: single
+  - id: 'c46'
+    alias: Truma Timer 2 - 3 Uhr off
+    description: ''
+    trigger:
+    - platform: time
+      at: 03:00:00
+    condition:
+    - condition: state
+      entity_id: input_boolean.truma_timer_2_3_uhr
+      state: 'on'
+    action:
+    - service: climate.turn_off
+      entity_id: climate.truma
+    - service: mqtt.publish
+      data:
+        topic: service/truma/set/target_temp_room
+        payload: '0'
+    - service: mqtt.publish
+      data:
+        topic: service/truma/set/heating_mode
+        payload: 'off'
+    - service: homeassistant.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.truma_timer_2_3_uhr
+    mode: single
+  - id: 'c47'
+    alias: Truma Timer 6 - 7 Uhr off
+    description: ''
+    trigger:
+    - platform: time
+      at: 07:00:00
+    condition:
+    - condition: state
+      entity_id: input_boolean.truma_timer_6_7_uhr
+      state: 'on'
+    action:
+    - service: climate.turn_off
+      entity_id: climate.truma
+    - service: mqtt.publish
+      data:
+        topic: service/truma/set/target_temp_room
+        payload: '0'
+    - service: mqtt.publish
+      data:
+        topic: service/truma/set/heating_mode
+        payload: 'off'
+    - service: homeassistant.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.truma_timer_6_7_uhr
+    mode: single
+  - id: 'c48'
+    alias: Truma Sleeptimer 30 Min
+    description: ''
+    trigger:
+    - platform: state
+      entity_id:
+      - input_boolean.sleeptimer_30_min
+      to: 'on'
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 10
+    condition: []
+    action:
+    - delay:
+        hours: 0
+        minutes: 30
+        seconds: 0
+        milliseconds: 0
+    - service: climate.turn_off
+      entity_id: climate.truma
+    - service: mqtt.publish
+      data:
+        topic: service/truma/set/target_temp_room
+        payload: '0'
+    - service: mqtt.publish
+      data:
+        topic: service/truma/set/heating_mode
+        payload: 'off'
+    - service: homeassistant.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.sleeptimer_30_min
+    mode: single
+  - id: 'c49'
+    alias: Truma Sleeptimer 1h
+    description: ''
+    trigger:
+    - platform: state
+      entity_id:
+      - input_boolean.sleeptimer_1h
+      to: 'on'
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 10
+    condition: []
+    action:
+    - delay:
+        hours: 1
+        minutes: 0
+        seconds: 0
+        milliseconds: 0
+    - service: climate.turn_off
+      entity_id: climate.truma
+    - service: mqtt.publish
+      data:
+        topic: service/truma/set/target_temp_room
+        payload: '0'
+    - service: mqtt.publish
+      data:
+        topic: service/truma/set/heating_mode
+        payload: 'off'
+    - service: homeassistant.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.sleeptimer_1h
+    mode: single
+  - id: 'c50'
+    alias: TRUMA Water autoswitch off
+    description: ''
+    trigger:
+    - platform: numeric_state
+      entity_id: sensor.truma_current_temp_water
+      above: 54
+      for: 00:10:00
+    condition: []
+    action:
+    - choose:
+      - conditions:
+          condition: state
+          entity_id: input_boolean.truma_water_autooff
+          state: 'on'
+        sequence:
+        - service: climate.turn_off
+          entity_id: climate.truma_water
+        - service: homeassistant.turn_off
+          entity_id: input_boolean.truma_water_switch
+    mode: single  
+  - id: 'c51'
+    alias: Truma Timer on
+    description: ''
+    trigger:
+    - platform: time
+      at: input_datetime.truma_einschalt_zeit
+    condition:
+    - condition: state
+      entity_id: input_boolean.truma_timer_steuerung
+      state: 'on'
+    action:
+    - choose:
+      - conditions:
+          condition: state
+          entity_id: input_boolean.truma_ctrl
+          state: 'on'
+        sequence:
+        - entity_id: climate.truma
+          action: climate.turn_on
+        - data:
+            topic: service/truma/set/target_temp_room
+            payload: '{{ (state_attr(''climate.truma'', ''temperature''))|round() }}
+
+              '
+          action: mqtt.publish
+        - data:
+            topic: service/truma/set/heating_mode
+            payload: high
+          action: mqtt.publish
+    - choose:
+      - conditions:
+          condition: state
+          entity_id: input_boolean.truma_ctrl
+          state: 'off'
+        sequence:
+        - entity_id: climate.truma
+          data:
+            hvac_mode: 'off'
+          action: climate.set_hvac_mode
+    mode: single
+  - id: 'c52'
+    alias: Truma Timer off
+    description: ''
+    trigger:
+    - platform: time
+      at: input_datetime.truma_ausschalt_zeit
+    condition:
+    - condition: state
+      entity_id: input_boolean.truma_timer_steuerung
+      state: 'on'
+    action:
+    - service: climate.turn_off
+      entity_id: climate.truma
+    - service: mqtt.publish
+      data:
+        topic: service/truma/set/target_temp_room
+        payload: '0'
+    - service: mqtt.publish
+      data:
+        topic: service/truma/set/heating_mode
+        payload: 'off'
+    - service: homeassistant.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.truma_timer_6_7_uhr
+    mode: single
+  - id: 'c53'
+    alias: TRUMA Reconnect stay off
+    description: ''
+    trigger:
+    - platform: state
+      entity_id:
+      - sensor.truma_target_temp_water
+      from: unavailable
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 0
+    condition:
+    - condition: state
+      entity_id: climate.truma_water
+      state: 'off'
+    action:
+    - service: climate.turn_off
+      data: {}
+      target:
+        entity_id: climate.truma_water
+    - service: homeassistant.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.truma_water_switch
+    - service: mqtt.publish
+      data:
+        topic: service/truma/set/target_temp_water
+        payload: '0'
+    - service: homeassistant.turn_off
+      data: {}
+      target:
+        entity_id:
+        - input_boolean.truma_water_boost
+        - input_boolean.truma_water_hot
+        - input_boolean.truma_water_eco
+    mode: single
